@@ -1,0 +1,215 @@
+<html>
+	<head>
+		<title>Гайнетдинов А.Р. ЭАС-409 Лабораторная работа Вариант №75</title>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+		<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
+
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css">
+
+		<style>
+			body
+			{
+				display:flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+				background: rgb(243, 163, 255);
+			}
+			.plitka
+			{
+				width: 640px; 
+				height: 540px;
+				border: groove; 
+				margin:20px;
+				background: rgb(255, 255, 235);
+			}
+			.plitka1
+			{
+				width: 600px; 
+				height: 500px;
+				background: rgb(255, 255, 235);
+				margin:20px;
+			}
+			.plitka2
+			{
+				width: 600px; 
+				height: 500px;
+				flex-wrap: wrap;
+				background: rgb(255, 255, 235);
+				margin:20px;
+			}
+			button
+			{
+				margin-left: 20px;
+				margin-bottom: 20px;
+			}
+		</style>
+		<script>
+			var ovoch=1000000
+			var nom=0
+			var t=0
+			var timer1=[]
+			var i=0
+			var timer
+			$(function(){
+    			var tabl = $('#myTable').DataTable({
+    				"language": {
+                    	"zeroRecords": "Записей нет"
+                 	},
+                 	"scrollY": "400px",
+	                "scrollX": true,
+	                "scrollCollapse": true,
+	                "paging": false,
+	                "info": false,
+	                "sDom": "lrtip",
+	                "autoWidth": false
+                })
+                $("button").button()
+                $( "input" ).checkboxradio()
+                $("#Start").click(function(){
+					timer = setInterval(()=>{
+						let min=5000
+						let max=15000
+						let t1=t
+						t=Math.floor(Math.random() * (max - min)) + min
+						t1=t+t1
+						console.log(t1)
+						timer1[i]=setTimeout(()=>{
+							ovoch=ovoch-1000
+							let ovoch1=1000
+							let brak=Math.floor(Math.random() * 80)
+							ovoch1=ovoch1-brak
+							let vts=Math.floor(Math.random() * (ovoch1/2))
+							ovoch1=ovoch1-vts
+							let ps=Math.floor(Math.random() * ((ovoch1*2)/3))
+							ovoch1=ovoch1-ps
+							let vs=ovoch1
+							let date=new Date()
+							let hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+							let mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+							let ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+							nom=nom+1
+							tabl.row.add( [
+                    			nom,
+                    			vs,
+                    			ps,
+                    			vts,
+                    			brak,
+                    			date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                			] ).draw(true)
+							VishiSort.data.push(vs)
+							PerviSort.data.push(ps)
+							VtoroiSort.data.push(vts)
+							Brak.data.push(brak)
+							speedData.labels.push(nom)
+    						chart.data=speedData
+    						chart.update();
+						}, t1)
+						i++
+						t=t1
+					},10)
+				})
+				$("#Finished").click(function(){
+					clearInterval(timer)
+					for(i1=0;i1<=i;i1++){
+						clearTimeout(timer1[i1])
+					}
+					t=0
+					i=0
+					timer1=[]
+				})
+    			var ctx = document.getElementById('myChart').getContext('2d');
+    			var VishiSort = {
+    				"label": "Высший сорт",
+    				"data": 0,
+    				"lineTension": 0,
+    				"fill": false,
+    				"backgroundColor": "rgba(255, 99, 132, 0.2)",
+    				"borderColor": "rgba(255, 99, 132, 1)"
+  				}
+  				var PerviSort = {
+    				"label": "Первый сорт",
+    				"data": 0,
+    				"lineTension": 0,
+    				"fill": false,
+  					"backgroundColor": "rgba(54, 162, 235, 0.2)",
+    				"borderColor": "rgba(54, 162, 235, 1)"
+  				}
+  				var VtoroiSort = {
+    				"label": "Второй сорт",
+    				"data": 0,
+    				"lineTension": 0,
+    				"fill": false,
+  					"backgroundColor": "rgba(255, 206, 86, 0.2)",
+    				"borderColor": "rgba(255, 206, 86, 1)"
+  				}
+  				var Brak = {
+    				"label": "Брак",
+    				"data": 0,
+    				"lineTension": 0,
+    				"fill": false,
+  					"backgroundColor": "rgba(75, 192, 192, 0.2)",
+    				"borderColor": "rgba(75, 192, 192, 1)"
+  				}
+  				var speedData = {
+  					"labels": 0,
+  					"datasets": [VishiSort, PerviSort, VtoroiSort, Brak]
+				}
+				var chart = new Chart(ctx, {
+    				"type": 'line',
+    				"data":speedData, 
+				    "options": {
+				        "scales": {
+				            "yAxes": [{
+				                "ticks": {
+				                    "beginAtZero": true
+				                }
+				            }]
+				        }
+				    }
+    			})
+			})
+		</script>
+	</head>
+	<body>
+		<div class="plitka">
+			<div class="plitka1">
+				<table id="myTable" class="display" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Номер партии</th>
+							<th>Высший сорт, кг</th>
+							<th>Первый сорт, кг</th>
+							<th>Второй сорт, кг</th>
+							<th>Брак, кг</th>
+							<th>Дата и время</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="plitka">
+			<canvas id="myChart" width="600" height="500"></canvas>
+		</div>
+		<div class="plitka">
+			<div class="plitka2">	
+				<button id="Start">Стартуем</button>
+				<button id="Finished">Финиш</button>
+				<button id="UvelSkor">Увеличение скорости сортировки в 2 раза</button>
+				<button id="UmenSkor">Уменьшение скорости сортировки в 2 раза</button>
+				<button id="Mehanic">Механик</button>
+				<button id="Uborchik">Уборщик</button>
+				<button id="Kladovchik">Кладовщик</button>
+				<label for="checkbox-1">Автоматическое решение аврийных ситуаций</label>
+    			<input type="checkbox" name="checkbox-1" id="checkbox-1">
+			</div>
+	</body>
+</html>
