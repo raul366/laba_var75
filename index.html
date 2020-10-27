@@ -31,6 +31,12 @@
 				margin:20px;
 				background: rgb(255, 255, 235);
 			}
+			#p
+			{
+				width: 498px;
+				margin:0px;
+				height: 403px;
+			}
 			.plitka1
 			{
 				width: 600px; 
@@ -40,14 +46,37 @@
 			}
 			.plitka2
 			{
-				width: 600px; 
-				height: 500px;
-				flex-wrap: wrap;
+				border-bottom: groove;
+				width: 498px; 
 				background: rgb(255, 255, 235);
-				margin:20px;
+			}
+			.plitka3
+			{
+				background: rgb(255, 255, 235);
+				border-bottom: groove;
+				width: 498px; 
+			}
+			.plitka4
+			{
+				background: rgb(255, 255, 235);
+				border-bottom: groove;
+				width: 498px; 
+			}
+			.plitka5
+			{
+				background: rgb(255, 255, 235);
+				/*border-bottom: groove;*/
+				width: 498px; 
 			}
 			button
 			{
+				margin-top: 20px;
+				margin-left: 20px;
+				margin-bottom: 20px;
+			}
+			label
+			{
+				margin-top: 20px;
 				margin-left: 20px;
 				margin-bottom: 20px;
 			}
@@ -199,15 +228,21 @@
 		<div class="plitka">
 			<canvas id="myChart" width="600" height="500"></canvas>
 		</div>
-		<div class="plitka">
+		<div class="plitka" id="p">
 			<div class="plitka2">	
 				<button id="Start">Стартуем</button>
 				<button id="Finished">Финиш</button>
+			</div>
+			<div class="plitka3">
 				<button id="UvelSkor">Увеличение скорости сортировки в 2 раза</button>
 				<button id="UmenSkor">Уменьшение скорости сортировки в 2 раза</button>
+			</div>
+			<div class="plitka4">
 				<button id="Mehanic">Механик</button>
 				<button id="Uborchik">Уборщик</button>
 				<button id="Kladovchik">Кладовщик</button>
+			</div>
+			<div class="plitka5">
 				<label for="checkbox-1">Автоматическое решение аврийных ситуаций</label>
     			<input type="checkbox" name="checkbox-1" id="checkbox-1">
 			</div>
