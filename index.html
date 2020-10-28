@@ -65,7 +65,6 @@
 			.plitka5
 			{
 				background: rgb(255, 255, 235);
-				/*border-bottom: groove;*/
 				width: 498px; 
 			}
 			button
@@ -88,6 +87,19 @@
 			var timer1=[]
 			var i=0
 			var timer
+			var date1
+			var hh1
+			var mm1
+			var ss1
+			$(document).ready(function() {
+				timer = setInterval(()=>{
+					date1=new Date()
+					hh1=date1.getHours()<10?"0"+date1.getHours():date1.getHours()
+					mm1=date1.getMinutes()<10?"0"+date1.getMinutes():date1.getMinutes()
+					ss1=date1.getSeconds()<10?"0"+date1.getSeconds():date1.getSeconds()
+					$(".time").text(hh1+":"+mm1+":"+ss1)
+				},50)
+			}); 
 			$(function(){
     			var tabl = $('#myTable').DataTable({
     				"language": {
@@ -209,6 +221,7 @@
 		</script>
 	</head>
 	<body>
+		<div class="time">e</div>
 		<div class="plitka">
 			<div class="plitka1">
 				<table id="myTable" class="display" cellspacing="0">
