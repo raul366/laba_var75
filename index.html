@@ -16,12 +16,23 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css">
 
 		<style>
-			body
+			*{
+				padding: 0;
+				margin:0;
+			}
+			.telo
 			{
 				display:flex;
 				justify-content: space-around;
 				flex-wrap: wrap;
-				background: rgb(243, 163, 255);
+				background: rgb(215, 255, 241);
+			}
+			.logo
+			{
+				margin: auto;	
+				display:flex;
+				align-items: center;
+				width: 600px;
 			}
 			.plitka
 			{
@@ -221,43 +232,51 @@
 		</script>
 	</head>
 	<body>
-		<div class="time"></div>
-		<div class="plitka">
-			<div class="plitka1">
-				<table id="myTable" class="display" cellspacing="0">
-					<thead>
-						<tr>
-							<th>Номер партии</th>
-							<th>Высший сорт, кг</th>
-							<th>Первый сорт, кг</th>
-							<th>Второй сорт, кг</th>
-							<th>Брак, кг</th>
-							<th>Дата и время</th>
-						</tr>
-					</thead>
-				</table>
+		<div class = "head" style="background: rgb(70,166,132);">
+			<div class="logo">
+				<div class="time" style="font-family: 'Times New Roman';font-size: 24px;font-weight:bold; color: white;"></div>
+				<h1 style="color: white; margin-left: 20px;">Сортировка овощей</h1>
 			</div>
 		</div>
-		<div class="plitka">
-			<canvas id="myChart" width="600" height="500"></canvas>
+		<div class="telo">
+			<div class="plitka">
+				<div class="plitka1">
+					<table id="myTable" class="display" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Номер партии</th>
+								<th>Высший сорт, кг</th>
+								<th>Первый сорт, кг</th>
+								<th>Второй сорт, кг</th>
+								<th>Брак, кг</th>
+								<th>Дата и время</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div class="plitka">
+				<canvas id="myChart" width="600" height="500"></canvas>
+			</div>
+			<div class="plitka" id="p">
+				<div class="plitka2">	
+					<button id="Start">Начало работы</button>
+					<button id="Finished">Завершение работы</button>
+				</div>
+				<div class="plitka3">
+					<button id="UvelSkor">Увеличение скорости сортировки в 2 раза</button>
+					<button id="UmenSkor">Уменьшение скорости сортировки в 2 раза</button>
+				</div>
+				<div class="plitka4">
+					<button id="Mehanic">Механик</button>
+					<button id="Uborchik">Уборщик</button>
+					<button id="Kladovchik">Кладовщик</button>
+				</div>
+				<div class="plitka5">
+					<label for="checkbox-1">Автоматическое решение аврийных ситуаций</label>
+    				<input type="checkbox" name="checkbox-1" id="checkbox-1">
+				</div>
+			</div>
 		</div>
-		<div class="plitka" id="p">
-			<div class="plitka2">	
-				<button id="Start">Стартуем</button>
-				<button id="Finished">Финиш</button>
-			</div>
-			<div class="plitka3">
-				<button id="UvelSkor">Увеличение скорости сортировки в 2 раза</button>
-				<button id="UmenSkor">Уменьшение скорости сортировки в 2 раза</button>
-			</div>
-			<div class="plitka4">
-				<button id="Mehanic">Механик</button>
-				<button id="Uborchik">Уборщик</button>
-				<button id="Kladovchik">Кладовщик</button>
-			</div>
-			<div class="plitka5">
-				<label for="checkbox-1">Автоматическое решение аврийных ситуаций</label>
-    			<input type="checkbox" name="checkbox-1" id="checkbox-1">
-			</div>
 	</body>
 </html>
