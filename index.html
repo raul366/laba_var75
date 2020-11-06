@@ -20,12 +20,17 @@
 				padding: 0;
 				margin:0;
 			}
+			body{
+				background: rgb(215, 255, 241);				
+			}
 			.telo
 			{
 				display:flex;
 				justify-content: space-around;
 				flex-wrap: wrap;
-				background: rgb(215, 255, 241);
+			}
+			.tabs{
+				width: 750px;
 			}
 			.logo
 			{
@@ -33,6 +38,7 @@
 				display:flex;
 				align-items: center;
 				width: 600px;
+				margin-bottom: 50px;
 			}
 			.plitka
 			{
@@ -52,31 +58,7 @@
 			{
 				width: 600px; 
 				height: 500px;
-				background: rgb(255, 255, 235);
 				margin:20px;
-			}
-			.plitka2
-			{
-				border-bottom: groove;
-				width: 498px; 
-				background: rgb(255, 255, 235);
-			}
-			.plitka3
-			{
-				background: rgb(255, 255, 235);
-				border-bottom: groove;
-				width: 498px; 
-			}
-			.plitka4
-			{
-				background: rgb(255, 255, 235);
-				border-bottom: groove;
-				width: 498px; 
-			}
-			.plitka5
-			{
-				background: rgb(255, 255, 235);
-				width: 498px; 
 			}
 			button
 			{
@@ -92,7 +74,7 @@
 			}
 		</style>
 		<script>
-			var ovoch=1000000
+			var ovoch=100000
 			var nom=0
 			var t=0
 			var timer1=[]
@@ -102,6 +84,13 @@
 			var hh1
 			var mm1
 			var ss1
+			var ovoch1=1000
+			var x=0
+			var b=80
+			var vs1=0
+			var ps1=0
+			var vts1=0
+			var brak1=0
 			$(document).ready(function() {
 				timer = setInterval(()=>{
 					date1=new Date()
@@ -124,9 +113,80 @@
 	                "sDom": "lrtip",
 	                "autoWidth": false
                 })
+                $('.tabs').tabs({})
                 $("button").button()
+                $("#UmenSkor").button({"disabled": true})
+                $("#NormSkor").button({"disabled": true})
+                $("#UvelSkor").button({"disabled": true})
+                $("#Mehanic").button({"disabled": true})
+                $("#Dezinsector").button({"disabled": true})
+                $("#Pop").button({"disabled": true})
+                $("#Vs").button({"disabled": true})
+                $("#Ps").button({"disabled": true})
+                $("#Vts").button({"disabled": true})
+                $("#Br").button({"disabled": true})
+                $("#Finished").button({"disabled": true})
                 $( "input" ).checkboxradio()
+                $("#UmenSkor").click(function(){
+                	ovoch1=500
+                	clearInterval(timer)
+					for(i1=0;i1<=i;i1++){
+						clearTimeout(timer1[i1])
+					}
+					t=0
+					i=0
+					b=40
+					timer1=[]
+					$("#UmenSkor").button({"disabled": true})
+                	$("#NormSkor").button({"disabled": false})
+                	$("#UvelSkor").button({"disabled": false})
+                	$("#Start").click()
+                })
+                $("#NormSkor").click(function(){
+                	ovoch1=1000
+                	clearInterval(timer)
+					for(i1=0;i1<=i;i1++){
+						clearTimeout(timer1[i1])
+					}
+					t=0
+					i=0
+					b=80
+					timer1=[]
+					$("#UmenSkor").button({"disabled": false})
+                	$("#NormSkor").button({"disabled": true})
+                	$("#UvelSkor").button({"disabled": false})
+                	$("#Start").click()
+                })
+                $("#UvelSkor").click(function(){
+                	ovoch1=2000
+                	clearInterval(timer)
+					for(i1=0;i1<=i;i1++){
+						clearTimeout(timer1[i1])
+					}
+					t=0
+					i=0
+					b=160
+					timer1=[]
+					$("#UmenSkor").button({"disabled": false})
+                	$("#NormSkor").button({"disabled": false})
+                	$("#UvelSkor").button({"disabled": true})
+                	$("#Start").click()
+                })
                 $("#Start").click(function(){
+                	if(x==0){
+                		$("#UmenSkor").button({"disabled": false})
+                		$("#UvelSkor").button({"disabled": false})
+                		$("#Mehanic").button({"disabled": false})
+                		$("#Dezinsector").button({"disabled": false})
+                		$("#Pop").button({"disabled": false})
+                		$("#Vs").button({"disabled": false})
+                		$("#Ps").button({"disabled": false})
+                		$("#Vts").button({"disabled": false})
+                		$("#Br").button({"disabled": false})
+                		$("#Finished").button({"disabled": false})
+                		x=1
+                		$("#zap").text(100)
+                	}
 					timer = setInterval(()=>{
 						let min=5000
 						let max=15000
@@ -135,20 +195,33 @@
 						t1=t+t1
 						console.log(t1)
 						timer1[i]=setTimeout(()=>{
-							ovoch=ovoch-1000
-							let ovoch1=1000
-							let brak=Math.floor(Math.random() * 80)
-							ovoch1=ovoch1-brak
-							let vts=Math.floor(Math.random() * (ovoch1/2))
-							ovoch1=ovoch1-vts
-							let ps=Math.floor(Math.random() * ((ovoch1*2)/3))
-							ovoch1=ovoch1-ps
-							let vs=ovoch1
+							ovoch=ovoch-ovoch1
+							let ov=(ovoch/100000)*100
+							$("#zap").text(ov)
+							let brak=Math.floor(Math.random() * b)
+							let ovoch2=ovoch1-brak
+							let vts=Math.floor(Math.random() * (ovoch2/2))
+							ovoch2=ovoch2-vts
+							let ps=Math.floor(Math.random() * ((ovoch2*2)/3))
+							ovoch2=ovoch2-ps
+							let vs=ovoch2
 							let date=new Date()
 							let hh=date.getHours()<10?"0"+date.getHours():date.getHours()
 							let mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
 							let ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
 							nom=nom+1
+							vs1=vs1+vs
+							let ov2=(vs1/5000)*100
+							$("#vo").text(ov2.toFixed(1))
+							ps1=ps1+ps
+							let ov3=(ps1/5000)*100
+							$("#oo").text(ov3.toFixed(1))
+							vts1=vts1+vts
+							let ov4=(vts1/5000)*100
+							$("#vto").text(ov4.toFixed(1))
+							brak1=brak1+brak
+							let ov5=(brak1/5000)*100
+							$("#bo").text(ov5.toFixed(1))
 							tabl.row.add( [
                     			nom,
                     			vs,
@@ -177,6 +250,37 @@
 					t=0
 					i=0
 					timer1=[]
+					tabl.clear();
+					tabl.draw();
+					for(i2=0;i2<nom;i2++){
+						chart.data.labels.pop();
+    					chart.data.datasets.forEach((dataset) => {
+        					dataset.data.pop();
+    					});
+    					chart.update();
+    					vs1=0
+						ps1=0
+						vts1=0
+						brak1=0
+						$("#vo").text(0)
+						$("#oo").text(0)
+						$("#vto").text(0)
+						$("#bo").text(0)
+						ovoch=100000
+						$("#zap").text(0)
+    				}
+    				$("#UmenSkor").button({"disabled": true})
+                	$("#NormSkor").button({"disabled": true})
+                	$("#UvelSkor").button({"disabled": true})
+                	$("#Mehanic").button({"disabled": true})
+                	$("#Dezinsector").button({"disabled": true})
+                	$("#Pop").button({"disabled": true})
+                	$("#Vs").button({"disabled": true})
+                	$("#Ps").button({"disabled": true})
+                	$("#Vts").button({"disabled": true})
+                	$("#Br").button({"disabled": true})
+                	$("#Finished").button({"disabled": true})
+                	x=0
 				})
     			var ctx = document.getElementById('myChart').getContext('2d');
     			var VishiSort = {
@@ -239,44 +343,61 @@
 			</div>
 		</div>
 		<div class="telo">
-			<div class="plitka">
-				<div class="plitka1">
-					<table id="myTable" class="display" cellspacing="0">
-						<thead>
-							<tr>
-								<th>Номер партии</th>
-								<th>Высший сорт, кг</th>
-								<th>Первый сорт, кг</th>
-								<th>Второй сорт, кг</th>
-								<th>Брак, кг</th>
-								<th>Дата и время</th>
-							</tr>
-						</thead>
-					</table>
+			<div class="tabs">
+				<ul>
+					<li><a href="#tabs-1">Управление</a></li>
+					<li><a href="#tabs-2">Таблица</a></li>
+				</ul>
+				<div id="tabs-1">
+					<div class="plitka6">
+						<label for="checkbox-1">Система автоматического принятия решения</label>
+		    			<input type="checkbox" name="checkbox-1" id="checkbox-1">
+					</div>
+					<div class="plitka2">	
+						<button id="Start">Начало работы</button>
+						<button id="Finished">Завершение работы</button>
+					</div>
+					<div class="plitka3">
+						<h2>Настройка скорости</h2>
+						<button id="UmenSkor">0.5x</button>
+						<button id="NormSkor">1X</button>
+						<button id="UvelSkor">2x</button>
+					</div>
+					<div class="plitka4">
+						<h2>Вызов работника</h2>
+						<button id="Mehanic">Механик</button>
+						<button id="Dezinsector">Дезинсектор</button>
+					</div>
+					<div class="plitka5">
+						<h2>Слад</h2>
+						<div><b>Объем запаса равен </b><b id="zap" style="color: blue;">0</b><b> %</b></div>
+						<button id="Pop">Пополнить запас</button>
+						<h2>Контейнер</h2>
+						<div><b>Запоненность контейнера:</b></div>
+						<div><b>Высший сорт </b><b id="vo" style="color: blue;">0</b><b> %</b><button id="Vs">Замена</button><b> Первый сорт </b><b id="oo" style="color: blue;">0</b><b> %</b><button id="Ps">Замена</button><br/><b>Второй сорт </b><b id="vto" style="color: blue;">0</b><b> %</b><button id="Vts">Замена</button><b> Брак </b><b id="bo" style="color: blue;">0</b><b> %</b><button id="Br">Замена</button></div>
+					</div>
+				</div>
+				<div id="tabs-2">
+					<div class="plitka1">
+						<table id="myTable" class="display" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Номер партии</th>
+									<th>Высший сорт, кг</th>
+									<th>Первый сорт, кг</th>
+									<th>Второй сорт, кг</th>
+									<th>Брак, кг</th>
+									<th>Дата и время</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="plitka">
 				<canvas id="myChart" width="600" height="500"></canvas>
 			</div>
-			<div class="plitka" id="p">
-				<div class="plitka2">	
-					<button id="Start">Начало работы</button>
-					<button id="Finished">Завершение работы</button>
-				</div>
-				<div class="plitka3">
-					<button id="UvelSkor">Увеличение скорости сортировки в 2 раза</button>
-					<button id="UmenSkor">Уменьшение скорости сортировки в 2 раза</button>
-				</div>
-				<div class="plitka4">
-					<button id="Mehanic">Механик</button>
-					<button id="Uborchik">Уборщик</button>
-					<button id="Kladovchik">Кладовщик</button>
-				</div>
-				<div class="plitka5">
-					<label for="checkbox-1">Автоматическое решение аврийных ситуаций</label>
-    				<input type="checkbox" name="checkbox-1" id="checkbox-1">
-				</div>
-			</div>
+			
 		</div>
 	</body>
 </html>
