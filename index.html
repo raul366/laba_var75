@@ -197,7 +197,7 @@
 						timer1[i]=setTimeout(()=>{
 							ovoch=ovoch-ovoch1
 							let ov=(ovoch/100000)*100
-							$("#zap").text(ov)
+							$("#zap").text(ov.toFixed(1))
 							let brak=Math.floor(Math.random() * b)
 							let ovoch2=ovoch1-brak
 							let vts=Math.floor(Math.random() * (ovoch2/2))
