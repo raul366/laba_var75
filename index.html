@@ -30,7 +30,7 @@
 				flex-wrap: wrap;
 			}
 			.tabs{
-				width: 750px;
+				width: 790px;
 			}
 			.logo
 			{
@@ -74,6 +74,7 @@
 			}
 		</style>
 		<script>
+			var o=0
 			var ovoch=100000
 			var nom=0
 			var t=0
@@ -91,6 +92,8 @@
 			var ps1=0
 			var vts1=0
 			var brak1=0
+			var ovoch3=0
+			var o1=0
 			$(document).ready(function() {
 				timer = setInterval(()=>{
 					date1=new Date()
@@ -172,6 +175,43 @@
                 	$("#UvelSkor").button({"disabled": true})
                 	$("#Start").click()
                 })
+                $("#Pop").click(function(){
+                	ovoch=100000
+                	if(o!=0){
+                		ovoch1=ovoch3
+                		o=0
+                	}
+                	$("#zap").text("100%; 100000кг")
+                	$("#Start").click()
+                })
+                $("#Vs").click(function(){
+                	$("#vo").text("0%; 0кг")
+                	if(i==0){
+                		$("#Start").click()
+                	}
+                	vs1=0
+                })
+                $("#Ps").click(function(){
+                	$("#oo").text("0%; 0кг")
+                	if(i==0){
+                		$("#Start").click()
+                	}
+                	ps1=0
+                })
+                $("#Vts").click(function(){
+                	$("#vto").text("0%; 0кг")
+                	if(i==0){
+                		$("#Start").click()
+                	}
+                	vts1=0
+                })
+                $("#Br").click(function(){
+                	$("#bo").text("0%; 0кг")
+                	if(i==0){
+                		$("#Start").click()
+                	}
+                	brak1=0
+                })
                 $("#Start").click(function(){
                 	if(x==0){
                 		$("#UmenSkor").button({"disabled": false})
@@ -184,8 +224,9 @@
                 		$("#Vts").button({"disabled": false})
                 		$("#Br").button({"disabled": false})
                 		$("#Finished").button({"disabled": false})
+                		$("#Start").button({"disabled": true})
                 		x=1
-                		$("#zap").text(100)
+                		$("#zap").text(100+"%; "+ovoch+"кг")
                 	}
 					timer = setInterval(()=>{
 						let min=5000
@@ -193,11 +234,16 @@
 						let t1=t
 						t=Math.floor(Math.random() * (max - min)) + min
 						t1=t+t1
-						console.log(t1)
 						timer1[i]=setTimeout(()=>{
+							if(ovoch<ovoch1||ovoch==ovoch1){
+								ovoch3=ovoch1
+								ovoch1=ovoch
+								o=1
+								console.log(ovoch3+" "+ovoch1)
+							}
 							ovoch=ovoch-ovoch1
 							let ov=(ovoch/100000)*100
-							$("#zap").text(ov.toFixed(1))
+							$("#zap").text(ov.toFixed(1)+"%; "+ovoch+"кг")
 							let brak=Math.floor(Math.random() * b)
 							let ovoch2=ovoch1-brak
 							let vts=Math.floor(Math.random() * (ovoch2/2))
@@ -210,18 +256,79 @@
 							let mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
 							let ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
 							nom=nom+1
-							vs1=vs1+vs
-							let ov2=(vs1/5000)*100
-							$("#vo").text(ov2.toFixed(1))
-							ps1=ps1+ps
-							let ov3=(ps1/5000)*100
-							$("#oo").text(ov3.toFixed(1))
-							vts1=vts1+vts
-							let ov4=(vts1/5000)*100
-							$("#vto").text(ov4.toFixed(1))
-							brak1=brak1+brak
-							let ov5=(brak1/5000)*100
-							$("#bo").text(ov5.toFixed(1))
+							let vs2=0
+							if(vs1+vs<=5000){
+								vs1=vs1+vs
+								let ov2=(vs1/5000)*100
+								$("#vo").text(ov2.toFixed(1)+"%; "+vs1+"кг")
+							}else if(vs1==5000){
+								vs2=vs
+								vs=0
+							}else{
+								vs1=vs1+vs
+								vs2=vs1-5000
+								vs1=5000
+								vs=vs-vs2
+								let ov2=(vs1/5000)*100
+								$("#vo").text(ov2.toFixed(1)+"%; "+vs1+"кг")
+							}
+							let ps2=0
+							if(ps1+ps+vs2<=5000){
+								ps1=ps1+ps+vs2
+								ps=vs2+ps
+								let ov3=(ps1/5000)*100
+								$("#oo").text(ov3.toFixed(1)+"%; "+ps1+"кг")
+							}else if(ps1==5000){
+								ps2=ps+vs2
+								ps=0
+							}else{
+								ps1=ps1+ps+vs2
+								ps2=ps1-5000
+								ps1=5000
+								ps=vs2+ps-ps2
+								let ov3=(ps1/5000)*100
+								$("#oo").text(ov3.toFixed(1)+"%; "+ps1+"кг")
+							}
+							let vts2=0
+							if(vts1+vts+ps2<=5000){
+								vts1=vts1+vts+ps2
+								vts=vts+ps2
+								let ov4=(vts1/5000)*100
+								$("#vto").text(ov4.toFixed(1)+"%; "+vts1+"кг")
+							}else if(vts1==5000){
+								vts2=vts+ps2
+								vts=0
+							}else{
+								vts1=vts1+vts+ps2
+								vts2=vts1-5000
+								vts1=5000
+								vts=ps2+vts-vts2
+								let ov4=(vts1/5000)*100
+								$("#vto").text(ov4.toFixed(1)+"%; "+vts1+"кг")
+							}
+							if(vts1==5000&&ps1==5000&&vs1==5000){
+								clearInterval(timer)
+								for(i1=0;i1<=i;i1++){
+									clearTimeout(timer1[i1])
+								}
+								t=0
+								i=0
+								timer1=[]
+							}
+							if(brak1+brak+vts2<=5000){
+								brak1=brak1+brak+vts2
+								brak=brak+vts2
+								let ov5=(brak1/5000)*100
+								$("#bo").text(ov5.toFixed(1)+"%; "+brak1+"кг")
+							}else{
+								clearInterval(timer)
+								for(i1=0;i1<=i;i1++){
+									clearTimeout(timer1[i1])
+								}
+								t=0
+								i=0
+								timer1=[]
+							}							
 							tabl.row.add( [
                     			nom,
                     			vs,
@@ -237,11 +344,23 @@
 							speedData.labels.push(nom)
     						chart.data=speedData
     						chart.update();
+    						if(ovoch==0){
+    							clearInterval(timer)
+								for(i1=0;i1<=i;i1++){
+									clearTimeout(timer1[i1])
+								}
+								t=0
+								i=0
+								timer1=[]
+    						}
 						}, t1)
 						i++
 						t=t1
 					},10)
 				})
+				$("#zzap").dialog({
+					"autoOpen": false
+				});
 				$("#Finished").click(function(){
 					clearInterval(timer)
 					for(i1=0;i1<=i;i1++){
@@ -258,17 +377,17 @@
         					dataset.data.pop();
     					});
     					chart.update();
-    					vs1=0
-						ps1=0
-						vts1=0
-						brak1=0
-						$("#vo").text(0)
-						$("#oo").text(0)
-						$("#vto").text(0)
-						$("#bo").text(0)
-						ovoch=100000
-						$("#zap").text(0)
     				}
+    				vs1=0
+					ps1=0
+					vts1=0
+					brak1=0
+					$("#vo").text("0%; 0кг")
+					$("#oo").text("0%; 0кг")
+					$("#vto").text("0%; 0кг")
+					$("#bo").text("0%; 0кг")
+					ovoch=100000
+					$("#zap").text("0%; 0кг")
     				$("#UmenSkor").button({"disabled": true})
                 	$("#NormSkor").button({"disabled": true})
                 	$("#UvelSkor").button({"disabled": true})
@@ -280,6 +399,7 @@
                 	$("#Vts").button({"disabled": true})
                 	$("#Br").button({"disabled": true})
                 	$("#Finished").button({"disabled": true})
+                	$("#Start").button({"disabled": false})
                 	x=0
 				})
     			var ctx = document.getElementById('myChart').getContext('2d');
@@ -324,7 +444,19 @@
     				"data":speedData, 
 				    "options": {
 				        "scales": {
+				        	"xAxes": [{
+      							"scaleLabel": {
+        							"display": true,
+        							"labelString": "Номер партии",
+        							"fontColor": "blue"
+      							}
+    						}],
 				            "yAxes": [{
+				            	"scaleLabel": {
+        							"display": true,
+        							"labelString": "Вес, кг",
+        							"fontColor": "blue"
+      							},
 				                "ticks": {
 				                    "beginAtZero": true
 				                }
@@ -370,11 +502,11 @@
 					</div>
 					<div class="plitka5">
 						<h2>Слад</h2>
-						<div><b>Объем запаса равен </b><b id="zap" style="color: blue;">0</b><b> %</b></div>
+						<div><b>Объем запаса равен </b><b id="zap" style="color: blue;">0%; 0кг</b></div>
 						<button id="Pop">Пополнить запас</button>
 						<h2>Контейнер</h2>
 						<div><b>Запоненность контейнера:</b></div>
-						<div><b>Высший сорт </b><b id="vo" style="color: blue;">0</b><b> %</b><button id="Vs">Замена</button><b> Первый сорт </b><b id="oo" style="color: blue;">0</b><b> %</b><button id="Ps">Замена</button><br/><b>Второй сорт </b><b id="vto" style="color: blue;">0</b><b> %</b><button id="Vts">Замена</button><b> Брак </b><b id="bo" style="color: blue;">0</b><b> %</b><button id="Br">Замена</button></div>
+						<div><b>Высший сорт </b><b id="vo" style="color: blue;">0%; 0кг</b><button id="Vs">Замена</button><b> Первый сорт </b><b id="oo" style="color: blue;">0%; 0кг</b><button id="Ps">Замена</button><br/><b>Второй сорт </b><b id="vto" style="color: blue;">0%; 0кг</b><button id="Vts">Замена</button><b> Брак </b><b id="bo" style="color: blue;">0%; 0кг</b><button id="Br">Замена</button></div>
 					</div>
 				</div>
 				<div id="tabs-2">
@@ -397,7 +529,7 @@
 			<div class="plitka">
 				<canvas id="myChart" width="600" height="500"></canvas>
 			</div>
-			
+			<div id="zzap"></div>
 		</div>
 	</body>
 </html>
