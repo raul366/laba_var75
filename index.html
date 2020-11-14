@@ -74,6 +74,9 @@
 			}
 		</style>
 		<script>
+			var av3=0
+			var j=1
+			var j1=1
 			var o=0
 			var ovoch=100000
 			var nom=0
@@ -94,6 +97,7 @@
 			var brak1=0
 			var ovoch3=0
 			var o1=0
+			var xa1=0
 			$(document).ready(function() {
 				timer = setInterval(()=>{
 					date1=new Date()
@@ -136,6 +140,7 @@
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					$("#x05").dialog("open")
 					t=0
 					i=0
 					b=40
@@ -145,12 +150,27 @@
                 	$("#UvelSkor").button({"disabled": false})
                 	$("#Start").click()
                 })
+                $("#Dezinsector").click(function(){
+                	if(xa1==2){
+                		xa1=0
+                		$("#dez").dialog("open")
+                		$("#Start").click()
+                	}
+                })
+                $("#Mehanic").click(function(){
+                	if(xa1==1){
+                		xa1=0
+                		$("#meh").dialog("open")
+                		$("#Start").click()
+                	}
+                })
                 $("#NormSkor").click(function(){
                 	ovoch1=1000
                 	clearInterval(timer)
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					$("#x1").dialog("open")
 					t=0
 					i=0
 					b=80
@@ -166,6 +186,7 @@
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					$("#x2").dialog("open")
 					t=0
 					i=0
 					b=160
@@ -176,44 +197,66 @@
                 	$("#Start").click()
                 })
                 $("#Pop").click(function(){
-                	ovoch=100000
                 	if(o!=0){
+                		ovoch=100000
                 		ovoch1=ovoch3
                 		o=0
+                		$("#zzap1").dialog("open")
+                	}
+                	if(ovoch!=100000){
+                		ovoch=100000
+                		$("#zzap1").dialog("open")
                 	}
                 	$("#zap").text("100%; 100000кг")
                 	$("#Start").click()
                 })
                 $("#Vs").click(function(){
                 	$("#vo").text("0%; 0кг")
-                	if(i==0){
+                	if(j1==0&&j==1){
                 		$("#Start").click()
                 	}
+                	if(vs1!=0){
+                		$("#zvs1").dialog("open")
+                	}
+                	j1=1
                 	vs1=0
                 })
                 $("#Ps").click(function(){
                 	$("#oo").text("0%; 0кг")
-                	if(i==0){
+                	if(j1==0&&j==1){
                 		$("#Start").click()
                 	}
+                	if(ps1!=0){
+                		$("#zps1").dialog("open")
+                	}
+                	j1=1
                 	ps1=0
                 })
                 $("#Vts").click(function(){
                 	$("#vto").text("0%; 0кг")
-                	if(i==0){
+                	if(j1==0&&j==1){
                 		$("#Start").click()
                 	}
+                	if(vts1!=0){
+                		$("#zvts1").dialog("open")
+                	}
+                	j1=1
                 	vts1=0
                 })
                 $("#Br").click(function(){
                 	$("#bo").text("0%; 0кг")
-                	if(i==0){
+                	if(j1==1&&j==0){
                 		$("#Start").click()
                 	}
+                	if(brak1!=0){
+                		$("#zb1").dialog("open")
+                	}
+                	j=1
                 	brak1=0
                 })
                 $("#Start").click(function(){
                 	if(x==0){
+                		$("#st").dialog("open")
                 		$("#UmenSkor").button({"disabled": false})
                 		$("#UvelSkor").button({"disabled": false})
                 		$("#Mehanic").button({"disabled": false})
@@ -235,7 +278,75 @@
 						t=Math.floor(Math.random() * (max - min)) + min
 						t1=t+t1
 						timer1[i]=setTimeout(()=>{
-							if(ovoch<ovoch1||ovoch==ovoch1){
+							if(i>=1){
+								let mav2=["Внимание!!! Черезвычайная ситуация на складе с запасами нашествие грызунов. Вся деяельность прекращена срочно вызовите Дезинсектора для решения данной ситуации.","Внимание!!! Черезвычайная ситуация у контейнеров с рассартированными оващами были обнаружены тараканы. Вся деяельность прекращена срочно вызовите Дезинсектора для решения данной ситуации."]
+								let mav1=["Внимание!!! Черезвычайная ситуация обрыв цепи конвеерной ленты. Вся деяельность прекращена срочно вызовите Механика для решения данной ситуации.","Внимание!!! Черезвычайная ситуация выход из строя роликов конвеернойленты. Вся деяельность прекращена срочно вызовите Механика для решения данной ситуации."]
+								let ver=20
+								if(ovoch1==2000){
+									ver=10
+								}else if(ovoch1==500){
+									ver=40
+								}
+								let av1=Math.floor(Math.random()*ver)
+								let av2=Math.floor(Math.random()*20)
+								console.log("av1 "+av1+" av2"+av2)
+								if(av1==9&&av2==9){
+									if(av3==0){
+										av3=1
+										let xa=Math.floor(Math.random()*2)
+										$("#za2").text(mav2[xa])
+										$("#Av2").dialog("open")
+										xa1=2
+										clearInterval(timer)
+										for(i1=0;i1<=i;i1++){
+											clearTimeout(timer1[i1])
+										}
+										t=0
+										i=0
+										timer1=[]
+									}else{
+										av3=0
+										let xa=Math.floor(Math.random()*2)
+										$("#za1").text(mav1[xa])
+										$("#Av1").dialog("open")
+										xa1=1
+										clearInterval(timer)
+										for(i1=0;i1<=i;i1++){
+											clearTimeout(timer1[i1])
+										}
+										t=0
+										i=0
+										timer1=[]
+									}
+								}else if(av1==9){
+									av3=0
+									let xa=Math.floor(Math.random()*2)
+									$("#za1").text(mav1[xa])
+									$("#Av1").dialog("open")
+									xa1=1
+									clearInterval(timer)
+									for(i1=0;i1<=i;i1++){
+										clearTimeout(timer1[i1])
+									}
+									t=0
+									i=0
+									timer1=[]
+								}else if(av2==9){
+									av3=1
+									let xa=Math.floor(Math.random()*2)
+									$("#za2").text(mav2[xa])
+									$("#Av2").dialog("open")
+									xa1=2
+									clearInterval(timer)
+									for(i1=0;i1<=i;i1++){
+										clearTimeout(timer1[i1])
+									}
+									t=0
+									i=0
+									timer1=[]
+								}
+							}
+							if(ovoch-ovoch1<=0){
 								ovoch3=ovoch1
 								ovoch1=ovoch
 								o=1
@@ -265,6 +376,11 @@
 								vs2=vs
 								vs=0
 							}else{
+								if(vts1==5000&&ps1==5000){
+
+								}else{
+									$("#zvs").dialog("open")
+								}							
 								vs1=vs1+vs
 								vs2=vs1-5000
 								vs1=5000
@@ -282,6 +398,11 @@
 								ps2=ps+vs2
 								ps=0
 							}else{
+								if(vts1==5000&&vs1==5000){
+
+								}else{
+									$("#zps").dialog("open")
+								}
 								ps1=ps1+ps+vs2
 								ps2=ps1-5000
 								ps1=5000
@@ -299,6 +420,11 @@
 								vts2=vts+ps2
 								vts=0
 							}else{
+								if(ps1==5000&&vs1==5000){
+
+								}else{
+									$("#zvts").dialog("open")
+								}
 								vts1=vts1+vts+ps2
 								vts2=vts1-5000
 								vts1=5000
@@ -307,6 +433,7 @@
 								$("#vto").text(ov4.toFixed(1)+"%; "+vts1+"кг")
 							}
 							if(vts1==5000&&ps1==5000&&vs1==5000){
+								$("#zs").dialog("open")
 								clearInterval(timer)
 								for(i1=0;i1<=i;i1++){
 									clearTimeout(timer1[i1])
@@ -314,6 +441,7 @@
 								t=0
 								i=0
 								timer1=[]
+								j1=0
 							}
 							if(brak1+brak+vts2<=5000){
 								brak1=brak1+brak+vts2
@@ -321,12 +449,17 @@
 								let ov5=(brak1/5000)*100
 								$("#bo").text(ov5.toFixed(1)+"%; "+brak1+"кг")
 							}else{
+								brak1=brak1+brak+vts2
+								brak=brak+vts2
+								$("#bo").text(1000+"%; "+5000+"кг")
+								$("#zb").dialog("open")
 								clearInterval(timer)
 								for(i1=0;i1<=i;i1++){
 									clearTimeout(timer1[i1])
 								}
 								t=0
 								i=0
+								j=0
 								timer1=[]
 							}							
 							tabl.row.add( [
@@ -344,7 +477,8 @@
 							speedData.labels.push(nom)
     						chart.data=speedData
     						chart.update();
-    						if(ovoch==0){
+    						if(o==1){
+    							$("#zzap").dialog("open")
     							clearInterval(timer)
 								for(i1=0;i1<=i;i1++){
 									clearTimeout(timer1[i1])
@@ -359,9 +493,87 @@
 					},10)
 				})
 				$("#zzap").dialog({
-					"autoOpen": false
-				});
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zzap1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zvs").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zvs1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zps").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zps1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zvts").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zvts1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zb").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zb1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#zs").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#x1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#x2").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#x05").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#st").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#fin").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#Av1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#Av2").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#dez").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#meh").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
 				$("#Finished").click(function(){
+					$("#fin").dialog("open")
 					clearInterval(timer)
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
@@ -529,7 +741,66 @@
 			<div class="plitka">
 				<canvas id="myChart" width="600" height="500"></canvas>
 			</div>
-			<div id="zzap"></div>
+			<div id="zzap">
+				<p>Запас закончился. Из-за чего была остановлена сортировка, для продолжения работы пополните запас.</p>
+			</div>
+			<div id="zzap1">
+				<p>Запас пополнен.</p>
+			</div>
+			<div id="zvs">
+				<p>Контейнер для Высшего сорта переполнен. Все пополнения высшего сорта будут отправляться в следующий по качеству свободный контейнер. Для возврата в нормальный режим работы замените этот контейнер.</p>
+			</div>
+			<div id="zvs1">
+				<p>Контейнер заменен.</p>
+			</div>
+			<div id="zps">
+				<p>Контейнер для Первого сорта переполнен. Все пополнения первого сорта будут отправляться в следующий по качеству свободный контейнер. Для возврата в нормальный режим работы замените этот контейнер.</p>
+			</div>
+			<div id="zps1">
+				<p>Контейнер заменен.</p>
+			</div>
+			<div id="zvts">
+				<p>Контейнер для Второго сорта переполнен. Все пополнения второго сорта будут отправляться в брак так как второй сортявляется нижайшим по качеству. Для возврата в нормальный режим работы замените этот контейнер.</p>
+			</div>
+			<div id="zvts1">
+				<p>Контейнер заменен.</p>
+			</div>
+			<div id="zb">
+				<p>Контейнер для Брака переполнен. Сортировка остановлена. Для повторного запуска сортировки замените этот контейнер.</p>
+			</div>
+			<div id="zb1">
+				<p>Контейнер заменен.</p>
+			</div>
+			<div id="zs">
+				<p>Все контейннеры для пригодной продукции переполнены сортировка продукции остановлена. Для продолжения сортировки замените хотя бы один из контейнеров.</p>
+			</div>
+			<div id="x1">
+				<p>Стандартная скорость сортировки. Вероятность механической поломки вернулась к первоночальной.</p>
+			</div>
+			<div id="x2">
+				<p>Cкорость сортировки увеличина в 2 раза от стандартной. Вероятность механической поломки возросла относительной первоночальной.</p>
+			</div>
+			<div id="x05">
+				<p>Cкорость сортировки уменьшина в 2 раза от стандартной.Вероятность механической поломки уменьшилась относительной первоночальной.</p>
+			</div>
+			<div id="st">
+				<p>Начата сортировка овощей</p>
+			</div>
+			<div id="fin">
+				<p>Сортировка овощей завершена</p>
+			</div>
+			<div id="Av2">
+				<p id="za2"></p>
+			</div>
+			<div id="Av1">
+				<p id="za1"></p>
+			</div>
+			<div id="dez">
+				<p>Зачистка выполнена. Сортирвка возобновлена.</p>
+			</div>
+			<div id="meh">
+				<p>Ремонт завершен. Сортировка возобновлена.</p>
+			</div>
 		</div>
 	</body>
 </html>
