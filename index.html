@@ -2,19 +2,12 @@
 	<head>
 		<title>Гайнетдинов А.Р. ЭАС-409 Лабораторная работа Вариант №75</title>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-
 		<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
-
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css">
-
 		<style>
 			*{
 				padding: 0;
@@ -80,6 +73,7 @@
 			var o=0
 			var ovoch=100000
 			var nom=0
+			var nom1=1
 			var t=0
 			var timer1=[]
 			var i=0
@@ -98,6 +92,11 @@
 			var ovoch3=0
 			var o1=0
 			var xa1=0
+			var sob=""
+			var date
+			var hh
+			var mm
+			var ss
 			$(document).ready(function() {
 				timer = setInterval(()=>{
 					date1=new Date()
@@ -120,6 +119,18 @@
 	                "sDom": "lrtip",
 	                "autoWidth": false
                 })
+                var jurnal = $('#myTable1').DataTable({
+    				"language": {
+                    	"zeroRecords": "Записей нет"
+                 	},
+                 	"scrollY": "400px",
+	                "scrollX": true,
+	                "scrollCollapse": true,
+	                "paging": false,
+	                "info": false,
+	                "sDom": "lrtip",
+	                "autoWidth": false
+                })                
                 $('.tabs').tabs({})
                 $("button").button()
                 $("#UmenSkor").button({"disabled": true})
@@ -133,13 +144,71 @@
                 $("#Vts").button({"disabled": true})
                 $("#Br").button({"disabled": true})
                 $("#Finished").button({"disabled": true})
-                $( "input" ).checkboxradio()
+                $( "#checkbox-1" ).checkboxradio()
+                $("#checkbox-1").click(function(){
+                	if($('#checkbox-1').is(':checked')){
+                		$("#auto1").dialog("open")
+                		if(x==1){
+                			$("#Mehanic").button({"disabled": true})
+                			$("#Dezinsector").button({"disabled": true})
+                			$("#Pop").button({"disabled": true})
+                			$("#Vs").button({"disabled": true})
+                			$("#Ps").button({"disabled": true})
+                			$("#Vts").button({"disabled": true})
+                			$("#Br").button({"disabled": true})
+                			date=new Date()
+							hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+							mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+							ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+							sob="Включено автоматическое принятие решений."
+							nom1=nom1+1
+                			jurnal.row.add( [
+                    			nom1,
+                    			sob,
+                    			date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                			] ).draw(true)
+                		}
+                	} else {
+                		$("#auto2").dialog("open")
+                		if(x==1){
+                			$("#Mehanic").button({"disabled": false})
+                			$("#Dezinsector").button({"disabled": false})
+                			$("#Pop").button({"disabled": false})
+                			$("#Vs").button({"disabled": false})
+                			$("#Ps").button({"disabled": false})
+                			$("#Vts").button({"disabled": false})
+                			$("#Br").button({"disabled": false})
+                			date=new Date()
+							hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+							mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+							ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+							sob="Автоматическое принятие решений отключено."
+							nom1=nom1+1
+                			jurnal.row.add( [
+                    			nom1,
+                    			sob,
+                    			date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                			] ).draw(true)
+                		}
+                	}
+                })
                 $("#UmenSkor").click(function(){
                 	ovoch1=500
                 	clearInterval(timer)
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#x05").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
 					$("#x05").dialog("open")
 					t=0
 					i=0
@@ -153,6 +222,17 @@
                 $("#Dezinsector").click(function(){
                 	if(xa1==2){
                 		xa1=0
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#dez").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#dez").dialog("open")
                 		$("#Start").click()
                 	}
@@ -160,6 +240,17 @@
                 $("#Mehanic").click(function(){
                 	if(xa1==1){
                 		xa1=0
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#meh").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#meh").dialog("open")
                 		$("#Start").click()
                 	}
@@ -170,6 +261,17 @@
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#x1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
 					$("#x1").dialog("open")
 					t=0
 					i=0
@@ -186,6 +288,17 @@
 					for(i1=0;i1<=i;i1++){
 						clearTimeout(timer1[i1])
 					}
+					nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#x2").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
 					$("#x2").dialog("open")
 					t=0
 					i=0
@@ -201,10 +314,32 @@
                 		ovoch=100000
                 		ovoch1=ovoch3
                 		o=0
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zzap1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zzap1").dialog("open")
                 	}
                 	if(ovoch!=100000){
                 		ovoch=100000
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zzap1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zzap1").dialog("open")
                 	}
                 	$("#zap").text("100%; 100000кг")
@@ -216,6 +351,17 @@
                 		$("#Start").click()
                 	}
                 	if(vs1!=0){
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zvs1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zvs1").dialog("open")
                 	}
                 	j1=1
@@ -227,6 +373,17 @@
                 		$("#Start").click()
                 	}
                 	if(ps1!=0){
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zps1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zps1").dialog("open")
                 	}
                 	j1=1
@@ -238,6 +395,17 @@
                 		$("#Start").click()
                 	}
                 	if(vts1!=0){
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zvts1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zvts1").dialog("open")
                 	}
                 	j1=1
@@ -249,13 +417,24 @@
                 		$("#Start").click()
                 	}
                 	if(brak1!=0){
+                		nom1=nom1+1
+									date=new Date()
+									hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+									mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+									ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zb1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
                 		$("#zb1").dialog("open")
                 	}
                 	j=1
                 	brak1=0
                 })
                 $("#Start").click(function(){
-                	if(x==0){
+                	if(x==0&&!$('#checkbox-1').is(':checked')){
                 		$("#st").dialog("open")
                 		$("#UmenSkor").button({"disabled": false})
                 		$("#UvelSkor").button({"disabled": false})
@@ -270,6 +449,41 @@
                 		$("#Start").button({"disabled": true})
                 		x=1
                 		$("#zap").text(100+"%; "+ovoch+"кг")
+                		date=new Date()
+						hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+						mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+						ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+						sob="Начало сортировки овощей"
+                		jurnal.row.add( [
+                    		nom1,
+                    		sob,
+                    		date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                		] ).draw(true)
+                	}else if(x==0&&$('#checkbox-1').is(':checked')){
+                		$("#st1").dialog("open")
+                		$("#UmenSkor").button({"disabled": false})
+                		$("#UvelSkor").button({"disabled": false})
+                		$("#Mehanic").button({"disabled": true})
+                		$("#Dezinsector").button({"disabled": true})
+                		$("#Pop").button({"disabled": true})
+                		$("#Vs").button({"disabled": true})
+                		$("#Ps").button({"disabled": true})
+                		$("#Vts").button({"disabled": true})
+                		$("#Br").button({"disabled": true})
+                		$("#Finished").button({"disabled": false})
+                		$("#Start").button({"disabled": true})
+                		x=1
+                		$("#zap").text(100+"%; "+ovoch+"кг")
+                		date=new Date()
+						hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+						mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+						ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+						sob="Начало сортировки овощей в режиме автоматического принятия решений"
+                		jurnal.row.add( [
+                    		nom1,
+                    		sob,
+                    		date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                		] ).draw(true)
                 	}
 					timer = setInterval(()=>{
 						let min=5000
@@ -289,13 +503,173 @@
 								}
 								let av1=Math.floor(Math.random()*ver)
 								let av2=Math.floor(Math.random()*20)
-								console.log("av1 "+av1+" av2"+av2)
+								console.log("av1 "+av1+" av2 "+av2)
 								if(av1==9&&av2==9){
 									if(av3==0){
 										av3=1
 										let xa=Math.floor(Math.random()*2)
 										$("#za2").text(mav2[xa])
+										if(!$('#checkbox-1').is(':checked')){
+											$("#Av2").dialog("open")
+											nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=mav2[xa]
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.	getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+											xa1=2
+											clearInterval(timer)
+											for(i1=0;i1<=i;i1++){
+												clearTimeout(timer1[i1])
+											}
+											t=0
+											i=0
+											timer1=[]
+										}else{
+											nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=mav2[xa]
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.	getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+                							nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=$("#dez").text()
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+										}
+									}else{
+										av3=0
+										let xa=Math.floor(Math.random()*2)
+										$("#za1").text(mav1[xa])
+										if(!$('#checkbox-1').is(':checked')){
+											$("#Av1").dialog("open")
+											nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=mav1[xa]
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+											xa1=1
+											clearInterval(timer)
+											for(i1=0;i1<=i;i1++){
+												clearTimeout(timer1[i1])
+											}
+											t=0
+											i=0
+											timer1=[]
+										}else{
+											nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											 mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=mav1[xa]
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+                							nom1=nom1+1
+											date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+											sob=$("#meh").text()
+                							jurnal.row.add( [
+                    							nom1,
+                    							sob,
+                    							date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                							] ).draw(true)
+										}
+									}
+								}else if(av1==9){
+									av3=0
+									let xa=Math.floor(Math.random()*2)
+									$("#za1").text(mav1[xa])
+									if(!$('#checkbox-1').is(':checked')){
+										$("#Av1").dialog("open")
+										xa1=1
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=mav1[xa]
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+										clearInterval(timer)
+										for(i1=0;i1<=i;i1++){
+											clearTimeout(timer1[i1])
+										}
+										t=0
+										i=0
+										timer1=[]
+									}else{
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=mav1[xa]
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+                						nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#meh").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+									}
+								}else if(av2==9){
+									av3=1
+									let xa=Math.floor(Math.random()*2)
+									$("#za2").text(mav2[xa])
+									if(!$('#checkbox-1').is(':checked')){
 										$("#Av2").dialog("open")
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=mav2[xa]
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
 										xa1=2
 										clearInterval(timer)
 										for(i1=0;i1<=i;i1++){
@@ -305,45 +679,29 @@
 										i=0
 										timer1=[]
 									}else{
-										av3=0
-										let xa=Math.floor(Math.random()*2)
-										$("#za1").text(mav1[xa])
-										$("#Av1").dialog("open")
-										xa1=1
-										clearInterval(timer)
-										for(i1=0;i1<=i;i1++){
-											clearTimeout(timer1[i1])
-										}
-										t=0
-										i=0
-										timer1=[]
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=mav2[xa]
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+                						nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#dez").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
 									}
-								}else if(av1==9){
-									av3=0
-									let xa=Math.floor(Math.random()*2)
-									$("#za1").text(mav1[xa])
-									$("#Av1").dialog("open")
-									xa1=1
-									clearInterval(timer)
-									for(i1=0;i1<=i;i1++){
-										clearTimeout(timer1[i1])
-									}
-									t=0
-									i=0
-									timer1=[]
-								}else if(av2==9){
-									av3=1
-									let xa=Math.floor(Math.random()*2)
-									$("#za2").text(mav2[xa])
-									$("#Av2").dialog("open")
-									xa1=2
-									clearInterval(timer)
-									for(i1=0;i1<=i;i1++){
-										clearTimeout(timer1[i1])
-									}
-									t=0
-									i=0
-									timer1=[]
 								}
 							}
 							if(ovoch-ovoch1<=0){
@@ -362,10 +720,10 @@
 							let ps=Math.floor(Math.random() * ((ovoch2*2)/3))
 							ovoch2=ovoch2-ps
 							let vs=ovoch2
-							let date=new Date()
-							let hh=date.getHours()<10?"0"+date.getHours():date.getHours()
-							let mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
-							let ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+							date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
 							nom=nom+1
 							let vs2=0
 							if(vs1+vs<=5000){
@@ -379,7 +737,43 @@
 								if(vts1==5000&&ps1==5000){
 
 								}else{
-									$("#zvs").dialog("open")
+									if(!$('#checkbox-1').is(':checked')){
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvs").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+										$("#zvs").dialog("open")
+									}else{
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvs").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+                						nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvs1").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+									}
 								}							
 								vs1=vs1+vs
 								vs2=vs1-5000
@@ -387,6 +781,10 @@
 								vs=vs-vs2
 								let ov2=(vs1/5000)*100
 								$("#vo").text(ov2.toFixed(1)+"%; "+vs1+"кг")
+								if($('#checkbox-1').is(':checked')){
+									$("#vo").text("0%; 0кг")
+									vs1=0
+								}
 							}
 							let ps2=0
 							if(ps1+ps+vs2<=5000){
@@ -401,7 +799,43 @@
 								if(vts1==5000&&vs1==5000){
 
 								}else{
-									$("#zps").dialog("open")
+									if(!$('#checkbox-1').is(':checked')){
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zps").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+										$("#zps").dialog("open")
+									}else{
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zps").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+                						nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zps1").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+									}
 								}
 								ps1=ps1+ps+vs2
 								ps2=ps1-5000
@@ -409,6 +843,10 @@
 								ps=vs2+ps-ps2
 								let ov3=(ps1/5000)*100
 								$("#oo").text(ov3.toFixed(1)+"%; "+ps1+"кг")
+								if($('#checkbox-1').is(':checked')){
+									$("#oo").text("0%; 0кг")
+									ps1=0
+								}
 							}
 							let vts2=0
 							if(vts1+vts+ps2<=5000){
@@ -423,7 +861,43 @@
 								if(ps1==5000&&vs1==5000){
 
 								}else{
-									$("#zvts").dialog("open")
+									if(!$('#checkbox-1').is(':checked')){
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvts").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+										$("#zvts").dialog("open")
+									}else{
+										nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvts").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+                						nom1=nom1+1
+										date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+										sob=$("#zvts1").text()
+                						jurnal.row.add( [
+                    						nom1,
+                    						sob,
+                    						date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                						] ).draw(true)
+									}
 								}
 								vts1=vts1+vts+ps2
 								vts2=vts1-5000
@@ -431,17 +905,85 @@
 								vts=ps2+vts-vts2
 								let ov4=(vts1/5000)*100
 								$("#vto").text(ov4.toFixed(1)+"%; "+vts1+"кг")
+								if($('#checkbox-1').is(':checked')){
+									$("#vto").text("0%; 0кг")
+									vts1=0
+								}
 							}
 							if(vts1==5000&&ps1==5000&&vs1==5000){
-								$("#zs").dialog("open")
-								clearInterval(timer)
-								for(i1=0;i1<=i;i1++){
-									clearTimeout(timer1[i1])
+								if(!$('#checkbox-1').is(':checked')){
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zs").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+									$("#zs").dialog("open")
+									clearInterval(timer)
+									for(i1=0;i1<=i;i1++){
+										clearTimeout(timer1[i1])
+									}
+									t=0
+									i=0
+									timer1=[]
+									j1=0
+								}else{
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zs").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zvs1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zps1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zvts1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					$("#vo").text("0%; 0кг")
+									vs1=0
+									$("#oo").text("0%; 0кг")
+									ps1=0
+									$("#vto").text("0%; 0кг")
+									vts1=0
 								}
-								t=0
-								i=0
-								timer1=[]
-								j1=0
 							}
 							if(brak1+brak+vts2<=5000){
 								brak1=brak1+brak+vts2
@@ -449,18 +991,62 @@
 								let ov5=(brak1/5000)*100
 								$("#bo").text(ov5.toFixed(1)+"%; "+brak1+"кг")
 							}else{
-								brak1=brak1+brak+vts2
-								brak=brak+vts2
-								$("#bo").text(100+"%; "+5000+"кг")
-								$("#zb").dialog("open")
-								clearInterval(timer)
-								for(i1=0;i1<=i;i1++){
-									clearTimeout(timer1[i1])
+								if(!$('#checkbox-1').is(':checked')){
+									brak1=brak1+brak+vts2
+									brak=brak+vts2
+									$("#bo").text(100+"%; "+5000+"кг")	
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zb").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+									$("#zb").dialog("open")
+									clearInterval(timer)
+									for(i1=0;i1<=i;i1++){
+										clearTimeout(timer1[i1])
+									}
+									t=0
+									i=0
+									j=0
+									timer1=[]
+								}else{
+									brak1=brak1+brak+vts2
+									brak=brak+vts2
+									$("#bo").text(100+"%; "+5000+"кг")	
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zb").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					brak1=brak1+brak+vts2
+									brak=brak+vts2
+									$("#bo").text(100+"%; "+5000+"кг")	
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zb1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					$("#bo").text("0%; 0кг")
+									brak1=0
 								}
-								t=0
-								i=0
-								j=0
-								timer1=[]
 							}							
 							tabl.row.add( [
                     			nom,
@@ -478,14 +1064,54 @@
     						chart.data=speedData
     						chart.update();
     						if(o==1){
-    							$("#zzap").dialog("open")
-    							clearInterval(timer)
-								for(i1=0;i1<=i;i1++){
-									clearTimeout(timer1[i1])
+    							if(!$('#checkbox-1').is(':checked')){
+    								nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zzap").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+    								$("#zzap").dialog("open")
+    								clearInterval(timer)
+									for(i1=0;i1<=i;i1++){
+										clearTimeout(timer1[i1])
+									}
+									t=0
+									i=0
+									timer1=[]
+								}else{
+									nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zzap").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					nom1=nom1+1
+									date=new Date()
+											hh=date.getHours()<10?"0"+date.getHours():date.getHours()
+											mm=date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
+											ss=date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+									sob=$("#zzap1").text()
+                					jurnal.row.add( [
+                    					nom1,
+                    					sob,
+                    					date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+hh+":"+mm+":"+ss
+                					] ).draw(true)
+                					ovoch=100000
+                					ovoch1=ovoch3
+                					o=0
+									$("#zap").text("100%; 100000кг")
 								}
-								t=0
-								i=0
-								timer1=[]
     						}
 						}, t1)
 						i++
@@ -572,6 +1198,18 @@
 					"autoOpen": false,
 					"title": "Сообщение"
 				})
+				$("#auto1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#auto2").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
+				$("#st1").dialog({
+					"autoOpen": false,
+					"title": "Сообщение"
+				})
 				$("#Finished").click(function(){
 					$("#fin").dialog("open")
 					clearInterval(timer)
@@ -583,6 +1221,8 @@
 					timer1=[]
 					tabl.clear();
 					tabl.draw();
+					jurnal.clear();
+					jurnal.draw();
 					for(i2=0;i2<nom;i2++){
 						chart.data.labels.pop();
     					chart.data.datasets.forEach((dataset) => {
@@ -613,6 +1253,19 @@
                 	$("#Finished").button({"disabled": true})
                 	$("#Start").button({"disabled": false})
                 	x=0
+                	av3=0
+                	j=1
+                	j1=1
+                	o=0
+                	nom=0
+                	nom1=1
+                	ovoch1=1000
+                	x=0
+                	b=80
+                	ovoch3=0
+                	o1=0
+                	xa1=0
+                	sob=""
 				})
     			var ctx = document.getElementById('myChart').getContext('2d');
     			var VishiSort = {
@@ -690,7 +1343,8 @@
 			<div class="tabs">
 				<ul>
 					<li><a href="#tabs-1">Управление</a></li>
-					<li><a href="#tabs-2">Таблица</a></li>
+					<li><a href="#tabs-2"onclick="setTimeout(()=>{$('#N').click();$('#N').click()},1)">Таблица</a></li>
+					<li><a href="#tabs-3" onclick="setTimeout(()=>{$('#N1').click();$('#N1').click()},1)">Журнал событий</a></li>
 				</ul>
 				<div id="tabs-1">
 					<div class="plitka6">
@@ -726,11 +1380,24 @@
 						<table id="myTable" class="display" cellspacing="0">
 							<thead>
 								<tr>
-									<th>Номер партии</th>
+									<th id="N">Номер партии</th>
 									<th>Высший сорт, кг</th>
 									<th>Первый сорт, кг</th>
 									<th>Второй сорт, кг</th>
 									<th>Брак, кг</th>
+									<th>Дата и время</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<div id="tabs-3">
+					<div class="plitka1">
+						<table id="myTable1" class="display" cellspacing="0">
+							<thead>
+								<tr>
+									<th id="N1">№</th>
+									<th>Событие</th>
 									<th>Дата и время</th>
 								</tr>
 							</thead>
@@ -786,6 +1453,9 @@
 			<div id="st">
 				<p>Начата сортировка овощей</p>
 			</div>
+			<div id="st1">
+				<p>Начало сортировки овощей в режиме автоматического принятия решений</p>
+			</div>	
 			<div id="fin">
 				<p>Сортировка овощей завершена</p>
 			</div>
@@ -800,6 +1470,12 @@
 			</div>
 			<div id="meh">
 				<p>Ремонт завершен. Сортировка возобновлена.</p>
+			</div>
+			<div id="auto1">
+				<p>Включено автоматическое принятие решений.</p>
+			</div>
+			<div id="auto2">
+				<p>Автоматическое принятие решений отключено</p>
 			</div>
 		</div>
 	</body>
